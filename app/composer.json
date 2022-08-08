@@ -1,0 +1,19 @@
+{
+    "name": "arslav/knaaru-bot",
+    "description": "New version vk bot",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Arslav\\KnaaruBot\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Arslav",
+            "email": "ardesslava@gmail.com"
+        }
+    ],
+    "require": {
+
+    }
+}
