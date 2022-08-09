@@ -1,6 +1,6 @@
 <?php
 
-use Arslav\Newbot\Commands\Vk\EchoCommand;
+use Arslav\KnaaruBot\Commands\Vk\EchoCommand;
 use function DI\create;
 use function DI\get;
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env php
 <?php
 
-use Arslav\Newbot\Cli;
+use Arslav\Bot\Cli;
 
 $container = require_once __DIR__ . '/../bootstrap.php';
 

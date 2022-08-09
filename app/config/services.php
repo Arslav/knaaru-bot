@@ -1,6 +1,6 @@
 <?php
 
-use Arslav\Newbot\Services\CommandStats;
+use Arslav\KnaaruBot\Services\CommandStats;
 use Psr\Container\ContainerInterface;
 use function DI\factory;
 

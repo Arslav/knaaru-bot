@@ -30,7 +30,7 @@ $entityManager = $container->get(EntityManager::class);
 $connection = $container->get(DriverManager::class);
 
 $configuration = new Configuration();
-$configuration->addMigrationsDirectory('Arslav\Newbot\Migrations', 'src/Migrations');
+$configuration->addMigrationsDirectory('Arslav\KnaaruBot\Migrations', 'src/Migrations');
 $configuration->setAllOrNothing(true);
 $configuration->setCheckDatabasePlatform(false);
 

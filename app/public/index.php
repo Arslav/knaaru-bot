@@ -1,6 +1,6 @@
 <?php
 
-use Arslav\Newbot\App;
+use Arslav\Bot\App;
 
 $container = require __DIR__ . '/../bootstrap.php';
 
