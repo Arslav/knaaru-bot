@@ -40,8 +40,8 @@ return [
     ]),
 
     'migration' => [
-        'namespace' => 'Arslav/KnaaruBot/Migrations',
-        'src' => 'src/Migrations'
+        'namespace' => 'Arslav\KnaaruBot\Migrations',
+        'src' => __DIR__.'/../src/Migrations'
     ],
 
     'isDev' => factory(fn ($c) => $c->get('ENVIRONMENT') != 'prod'),

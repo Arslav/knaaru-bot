@@ -1,6 +1,6 @@
 <?php
 
-use Arslav\Newbot\App;
+use Arslav\Bot\App;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use Symfony\Component\Finder\Exception\DirectoryNotFoundException;
