@@ -1,6 +1,7 @@
 <?php
 
 use DigitalStar\vk_api\vk_api;
+use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Logging\Middleware;
 use Doctrine\ORM\Configuration;
@@ -38,6 +39,11 @@ return [
         'charset' => 'UTF8',
     ]),
 
+    'migration' => [
+        'namespace' => 'Arslav/KnaaruBot/Migrations',
+        'src' => 'src/Migrations'
+    ],
+
     'isDev' => factory(fn ($c) => $c->get('ENVIRONMENT') != 'prod'),
 
     StreamHandler::class => factory(fn ($c) =>
@@ -57,10 +63,10 @@ return [
              ->setMiddlewares([new Middleware($c->get(LoggerInterface::class))])
     ),
 
-    DriverManager::class => factory(fn ($c) => DriverManager::getConnection($c->get('DbConnectionParams'))),
+    Connection::class => factory(fn ($c) => DriverManager::getConnection($c->get('DbConnectionParams'))),
 
     EntityManager::class => factory(fn ($c) =>
-        EntityManager::create($c->get(DriverManager::class), $c->get(Configuration::class)
+        EntityManager::create($c->get(Connection::class), $c->get(Configuration::class)
     )),
 
     vk_api::class => factory(function ($c) {

@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Arslav/Bot.git",
-                "reference": "cc1de3870207736c128588328edea2fc48ba14e3"
+                "reference": "b9b6e494df182406f0b8cc115e8d448156da3bf5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Arslav/Bot/zipball/cc1de3870207736c128588328edea2fc48ba14e3",
-                "reference": "cc1de3870207736c128588328edea2fc48ba14e3",
+                "url": "https://api.github.com/repos/Arslav/Bot/zipball/b9b6e494df182406f0b8cc115e8d448156da3bf5",
+                "reference": "b9b6e494df182406f0b8cc115e8d448156da3bf5",
                 "shasum": ""
             },
             "require": {
@@ -57,7 +57,7 @@
                 "issues": "https://github.com/Arslav/Bot/issues",
                 "source": "https://github.com/Arslav/Bot/tree/main"
             },
-            "time": "2022-08-09T20:55:45+00:00"
+            "time": "2022-08-10T19:25:03+00:00"
         },
         {
             "name": "digitalstars/simplevk",
