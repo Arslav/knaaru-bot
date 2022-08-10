@@ -12,7 +12,7 @@ class EchoCest
      *
      * @return void
      */
-    public function tryToTest(FunctionalTester $I)
+    public function tryToTest(FunctionalTester $I): void
     {
         $I->wantToTest('Echo command');
         $I->runShellCommand('bin/console echo test');

@@ -17,6 +17,7 @@ use Doctrine\ORM\EntityManager;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
+//TODO: Сделать модуль более гибким и в виде отдельного пакета
 class Database extends Module implements DoctrineProvider
 {
     protected static bool $migrated = false;
@@ -35,12 +36,16 @@ class Database extends Module implements DoctrineProvider
     }
 
     /**
-     * @throws NotFoundException
+     * @return void
+     *
+     * @throws ContainerExceptionInterface
      * @throws DependencyException
      * @throws Exception
      * @throws ModuleException
+     * @throws NotFoundException
+     * @throws NotFoundExceptionInterface
      */
-    protected function migrate()
+    protected function migrate(): void
     {
         if (!self::$migrated) {
             $database = $this->container->get('DB_NAME');
@@ -55,6 +60,7 @@ class Database extends Module implements DoctrineProvider
 
     /**
      * @return EntityManager
+     *
      * @throws DependencyException
      * @throws ModuleException
      * @throws NotFoundException
@@ -69,13 +75,17 @@ class Database extends Module implements DoctrineProvider
     }
 
     /**
+     * @param string $database
+     *
      * @return void
      *
+     * @throws ContainerExceptionInterface
      * @throws DependencyException
      * @throws Exception
      * @throws NotFoundException
+     * @throws NotFoundExceptionInterface
      */
-    protected function createDatabase(string $database)
+    protected function createDatabase(string $database): void
     {
         $params = $this->container->get('DbConnectionParams');
         unset($params['dbname']);
