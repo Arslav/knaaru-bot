@@ -9,7 +9,9 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\" : "tests"
+            "Tests\\" : "tests",
+            "Tests\\Unit\\" : "tests/Unit",
+            "Tests\\Functional\\" : "tests/Functional"
         }
     },
     "authors": [

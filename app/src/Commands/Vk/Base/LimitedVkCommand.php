@@ -20,8 +20,9 @@ abstract class LimitedVkCommand extends VkCommand
 
     /**
      * @Inject
+     * @var CommandStats
      */
-    public CommandStats $service;
+    public CommandStats $statsService;
 
     /**
      * @return bool
@@ -35,7 +36,7 @@ abstract class LimitedVkCommand extends VkCommand
      */
     public function beforeAction(): bool
     {
-        $this->service->saveUsage(static::class, $this->from_id, $this->chat_id);
+        $this->statsService->saveUsage(static::class, $this->from_id, $this->chat_id);
         return $this->checkLimit();
     }
 
@@ -49,7 +50,7 @@ abstract class LimitedVkCommand extends VkCommand
      */
     protected function checkLimit(): bool
     {
-        $usages = $this->service->usagesByInterval(
+        $usages = $this->statsService->usagesByInterval(
             $this->interval,
             static::class,
             $this->from_id,

@@ -23,8 +23,6 @@ class LimitedVkCommandTest extends Unit
 {
     protected UnitTester $tester;
 
-    protected CommandStats $service;
-
     protected LimitedVkCommand $command;
 
     /**
@@ -43,7 +41,7 @@ class LimitedVkCommandTest extends Unit
             [['test']],
             ['run' => Expected::never()]
         );
-        $this->command->service = $container->get(CommandStats::class);
+        $this->command->statsService = $container->get(CommandStats::class);
         parent::setUp();
     }
 
@@ -59,7 +57,7 @@ class LimitedVkCommandTest extends Unit
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function testBeforeAction()
+    public function testBeforeAction(): void
     {
         $this->tester->sendMessage('test');
         $this->command->init($this->tester->getVkMessageData());
@@ -76,7 +74,7 @@ class LimitedVkCommandTest extends Unit
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function testBeforeActionLimit()
+    public function testBeforeActionLimit(): void
     {
         $this->tester->sendMessage('test');
         $this->command->init($this->tester->getVkMessageData());
