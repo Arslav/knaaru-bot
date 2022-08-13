@@ -14,9 +14,10 @@ return [
             '^ря+$',
             '^[аы]{2,}$'
         ]),
-    GiveMePillsCommand::class => autowire()->constructor(['сла+ва+(\,)? дай табле(тки+|то+к)\s?[(\!)(\?)]*$']),
+    GiveMePillsCommand::class => autowire()->constructor(['^сла+ва+(\,)? дай табле(тки+|то+к)\s?[(\!)(\?)]*$']),
 
     'vk-commands' => [
         get(EchoCommand::class),
+        get(GiveMePillsCommand::class)
     ]
 ];
