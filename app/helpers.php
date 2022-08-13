@@ -31,4 +31,3 @@ function snakeToCamelCase(string $string, bool $capitalizeFirstCharacter = true)
 
     return $str;
 }
-

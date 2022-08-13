@@ -1,13 +1,12 @@
 <?php
 
 use Arslav\Bot\App;
-use Codeception\Stub\Expected;
 use Codeception\Stub;
 use DigitalStar\vk_api\vk_api;
 use Psr\Log\LoggerInterface;
 use Tests\Support\Helper\Message;
 
-$_ENV['DB_NAME']='test';
+$_ENV['DB_NAME'] = $_ENV['DB_TEST_NAME'];
 
 $container = require_once __DIR__ . '/../bootstrap.php';
 
