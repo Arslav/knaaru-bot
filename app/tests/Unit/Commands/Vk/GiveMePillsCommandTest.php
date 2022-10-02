@@ -4,86 +4,63 @@ namespace Tests\Unit\Commands\Vk;
 
 use Arslav\Bot\App;
 use Arslav\KnaaruBot\Commands\Vk\GiveMePillsCommand;
+use Arslav\KnaaruBot\Services\CommandStatsService;
 use Arslav\KnaaruBot\Services\FileService;
 use Codeception\Stub;
 use Codeception\Stub\Expected;
 use Codeception\Test\Unit;
-use DI\Container;
-use DI\DependencyException;
-use DI\NotFoundException;
 use DigitalStar\vk_api\vk_api;
+use Exception;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
-use Tests\Support\UnitTester;
 
 class GiveMePillsCommandTest extends Unit
 {
-    public UnitTester $tester;
-    public Container $container;
-    public mixed $stub;
+    protected GiveMePillsCommand $command;
 
-    /**
-     * @return void
-     *
-     * @throws NotFoundExceptionInterface
-     * @throws NotFoundException
-     * @throws ContainerExceptionInterface
-     * @throws DependencyException
-     */
-    protected function setUp(): void
+    public function setUp(): void
     {
-        $container = App::getContainer();
-        $this->container = $container;
-
-        /** @var $stub Stub */
-        $this->stub = $container->get(vk_api::class);
-
+        $this->command = App::getContainer()->get(GiveMePillsCommand::class);
+        $this->command->statsService = $this->constructEmpty(CommandStatsService::class);
         parent::setUp();
     }
 
     /**
-     * @return void
-     *
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
+     * @throws Exception
      */
-    public function testRunWithImages(): void
+    public function testRun()
     {
-        $this->tester->sendMessage('слава дай таблетки');
+        $this->command->fileService = $this->constructEmpty(
+            FileService::class,
+            [],
+            [
+                'getFiles' => fn() => [],
+            ]
+        );
+        Stub::update(App::getVk(), [
+            'reply' => Expected::once(),
+            'sendImage' => Expected::never(),
+        ]);
 
-        Stub::update($this->stub, [
+        $this->command->run();
+    }
+
+    public function testRunWithImage()
+    {
+        $this->command->fileService = $this->constructEmpty(
+            FileService::class,
+            [],
+            [
+                'getFiles' => fn() => ['file1', 'file2'],
+            ]
+        );
+        Stub::update(App::getVk(), [
+            'reply' => Expected::never(),
             'sendImage' => Expected::once(),
         ]);
 
-        $app = new App($this->container);
-        $app->run();
-    }
-
-    /**
-     * @return void
-     *
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
-     */
-    public function testRunWithoutImages(): void
-    {
-        $this->tester->sendMessage('слава дай таблетки');
-        $fileService = $this->constructEmpty(
-            FileService::class,
-            [],
-            ['getFiles' => []]
-        );
-
-        /** @var GiveMePillsCommand $command */
-        $command = $this->container->get(GiveMePillsCommand::class);
-        $command->fileService = $fileService;
-
-        /** @var $stub Stub */
-        Stub::update($this->stub, [
-            'reply' => Expected::once(),
-        ]);
-
-        $app = new App($this->container);
-        $app->run();
+        $this->command->run();
     }
 }

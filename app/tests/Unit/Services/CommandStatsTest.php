@@ -4,13 +4,15 @@ namespace Tests\Unit\Services;
 
 use Arslav\Bot\App;
 use Arslav\KnaaruBot\Entities\CommandLog;
-use Arslav\KnaaruBot\Services\CommandStats;
+use Arslav\KnaaruBot\Services\CommandStatsService;
 use Codeception\Test\Unit;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Loader;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\ORM\Exception\ORMException;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\OptimisticLockException;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
@@ -19,7 +21,7 @@ use Tests\Support\UnitTester;
 
 class CommandStatsTest extends Unit
 {
-    protected CommandStats $service;
+    protected CommandStatsService $service;
 
     protected UnitTester $tester;
 
@@ -31,7 +33,7 @@ class CommandStatsTest extends Unit
      */
     protected function setUp(): void
     {
-        $this->service = new CommandStats();
+        $this->service = new CommandStatsService();
         $loader = new Loader();
         $loader->addFixture(new FileFixture(CommandLog::class, 'command_log.php'));
         $executor = new ORMExecutor(App::getEntityManager(), new ORMPurger());
@@ -47,12 +49,10 @@ class CommandStatsTest extends Unit
      *
      * @throws ORMException
      * @throws OptimisticLockException
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
      *
      * @dataProvider commandProvider
      */
-    public function testSaveUsage(string $command, int $from_id, ?int $chat_id)
+    public function testSaveUsage(string $command, int $from_id, ?int $chat_id): void
     {
         $this->service->saveUsage($command, $from_id, $chat_id);
 
@@ -71,14 +71,30 @@ class CommandStatsTest extends Unit
     }
 
     /**
+     * @param string $command
+     * @param int $from_id
+     * @param int|null $chat_id
+     * @param int $expected
      * @return void
      *
+     * @throws NoResultException
+     * @throws NonUniqueResultException
      * @dataProvider commandUsagesProvider
      */
-    public function testUsagesByInterval(string $command, int $from_id, ?int $chat_id, int $expected)
+    public function testUsagesByInterval(string $command, int $from_id, ?int $chat_id, int $expected): void
     {
         $actual = $this->service->usagesByInterval(300, $command, $from_id, $chat_id);
         $this->assertSame($expected, $actual);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetAllChatId(): void
+    {
+        $chat_ids = $this->service->getAllChatIds();
+        $this->assertIsArray($chat_ids);
+        $this->assertSame([2, 1], $chat_ids);
     }
 
     /**

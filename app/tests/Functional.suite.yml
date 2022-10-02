@@ -3,6 +3,8 @@ suite_namespace: Tests\Functional
 modules:
     enabled:
         - Codeception\Module\Cli
+        - \Tests\Support\Module\Stub
+        - Arslav\Bot\Tests\Helpers\VkChatHelper
         - Asserts
         - Doctrine2:
-            depends: \Tests\Support\Modules\Database
+            depends: \Tests\Support\Module\Database

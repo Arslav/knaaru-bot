@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Support\Modules;
+namespace Tests\Support\Module;
 
 use Arslav\Bot\App;
 use Codeception\Exception\ModuleException;

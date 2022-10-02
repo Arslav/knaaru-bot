@@ -6,6 +6,8 @@ use Arslav\Bot\App;
 use Arslav\KnaaruBot\Entities\CommandLog;
 use Carbon\Carbon;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
@@ -14,8 +16,22 @@ use Doctrine\ORM\Query\Parameter;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
-class CommandStats
+class CommandStatsService
 {
+    public EntityManager $em;
+    public EntityRepository $repository;
+
+    /**
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
+    public function __construct()
+    {
+        //TODO: Переписать на DI
+        $this->em = App::getEntityManager();
+        $this->repository = $this->em->getRepository(CommandLog::class);
+    }
+
     /**
      * @param string $commandClass
      * @param int $from_id
@@ -24,30 +40,30 @@ class CommandStats
      *
      * @throws ORMException
      * @throws OptimisticLockException
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
      */
     public function saveUsage(string $commandClass, int $from_id, int $chat_id = null): void
     {
-        $em = App::getEntityManager();
         $command_log = new CommandLog();
         $command_log->setCommand($commandClass);
         $command_log->setFromId($from_id);
         $command_log->setChatId($chat_id);
-        $em->persist($command_log);
-        $em->flush($command_log);
+        $this->em->persist($command_log);
+        $this->em->flush($command_log);
     }
 
     /**
-     * @throws NotFoundExceptionInterface
-     * @throws ContainerExceptionInterface
-     * @throws NonUniqueResultException
+     * @param int $interval
+     * @param string $commandClass
+     * @param int $from_id
+     * @param int|null $chat_id
+     *
+     * @return int
+     *
      * @throws NoResultException
+     * @throws NonUniqueResultException
      */
     public function usagesByInterval(int $interval, string $commandClass, int $from_id, int $chat_id = null): int
     {
-        $repository = App::getEntityManager()->getRepository(CommandLog::class);
-
         $params = new ArrayCollection([
             new Parameter('start', Carbon::now()->timestamp - $interval),
             new Parameter('end', Carbon::now()->timestamp),
@@ -55,7 +71,7 @@ class CommandStats
             new Parameter('command', $commandClass),
         ]);
 
-        $query = $repository->createQueryBuilder('l')
+        $query = $this->repository->createQueryBuilder('l')
             ->select('count(l.id)')
             ->where('l.created_at BETWEEN :start AND :end')
             ->andWhere('l.command = :command')
@@ -70,5 +86,21 @@ class CommandStats
         }
 
         return $query->getQuery()->getSingleScalarResult();
+    }
+
+    /**
+     * @return array
+     */
+    public function getAllChatIds(): array
+    {
+        $query = $this->repository->createQueryBuilder('c');
+
+        $query->select('c.chat_id')
+            ->where($query->expr()->isNotNull('c.chat_id'))
+            ->distinct();
+
+        $result = $query->getQuery()->getArrayResult();
+
+        return array_column($result, 'chat_id');
     }
 }

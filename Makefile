@@ -61,7 +61,7 @@ docker-build-app:
 	rm app.tar
 
 shell:
-	docker-compose run php sh
+	docker-compose run --rm php sh
 
 test:
 	docker-compose run php vendor/bin/codecept run

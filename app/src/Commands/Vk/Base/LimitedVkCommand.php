@@ -3,7 +3,7 @@
 namespace Arslav\KnaaruBot\Commands\Vk\Base;
 
 use Arslav\Bot\Commands\Vk\Base\VkCommand;
-use Arslav\KnaaruBot\Services\CommandStats;
+use Arslav\KnaaruBot\Services\CommandStatsService;
 use DI\Annotation\Inject;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\NonUniqueResultException;
@@ -20,9 +20,9 @@ abstract class LimitedVkCommand extends VkCommand
 
     /**
      * @Inject
-     * @var CommandStats
+     * @var CommandStatsService
      */
-    public CommandStats $statsService;
+    public CommandStatsService $statsService;
 
     /**
      * @return bool

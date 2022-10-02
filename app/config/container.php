@@ -69,11 +69,10 @@ return [
         EntityManager::create($c->get(Connection::class), $c->get(Configuration::class)
     )),
 
-    vk_api::class => factory(function ($c) {
-        $vk = vk_api::create($c->get('VK_API_TOKEN'), $c->get('VK_API_VERSION'))->setConfirm($c->get('VK_API_CONFIRM_STRING'));
-        if ($c->get('isDev')) {
-            $vk->debug();
-        }
-        return $vk;
-    }),
+    vk_api::class => factory(fn ($c) =>
+        vk_api::create(
+            $c->get('VK_API_TOKEN'),
+            $c->get('VK_API_VERSION')
+        )->setConfirm($c->get('VK_API_CONFIRM_STRING'))
+    ),
 ];

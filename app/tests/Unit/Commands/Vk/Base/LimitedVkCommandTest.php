@@ -5,7 +5,7 @@ namespace Tests\Unit\Commands\Vk\Base;
 use Arslav\Bot\App;
 use Arslav\KnaaruBot\Commands\Vk\Base\LimitedVkCommand;
 use Arslav\KnaaruBot\Entities\CommandLog;
-use Arslav\KnaaruBot\Services\CommandStats;
+use Arslav\KnaaruBot\Services\CommandStatsService;
 use Codeception\Stub\Expected;
 use Codeception\Test\Unit;
 use DI\DependencyException;
@@ -41,7 +41,7 @@ class LimitedVkCommandTest extends Unit
             [['test']],
             ['run' => Expected::never()]
         );
-        $this->command->statsService = $container->get(CommandStats::class);
+        $this->command->statsService = $container->get(CommandStatsService::class);
         parent::setUp();
     }
 
@@ -59,7 +59,7 @@ class LimitedVkCommandTest extends Unit
      */
     public function testBeforeAction(): void
     {
-        $this->tester->sendMessage('test');
+        $this->tester->sendVkMessage('test');
         $this->command->init($this->tester->getVkMessageData());
         $this->assertSame(true, $this->command->beforeAction());
     }
@@ -76,7 +76,7 @@ class LimitedVkCommandTest extends Unit
      */
     public function testBeforeActionLimit(): void
     {
-        $this->tester->sendMessage('test');
+        $this->tester->sendVkMessage('test');
         $this->command->init($this->tester->getVkMessageData());
 
         for($i = 0; $i < $this->command->limit; $i++) {
