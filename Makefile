@@ -1,10 +1,16 @@
 REGISTRY=registry.knaaru.ru
 PHP_IMAGE=knaaru-bot/php
 APP_IMAGE=knaaru-bot/app
-DEV_IMAGE=knaaru-bot/php
+UNAME=$(shell uname -p)
 
 ifeq ($(D_TAG),)
   D_TAG=latest
+endif
+
+ifneq ($(UNAME),arm)
+  BUILD=build
+else
+  BUILD=buildx build --platform=linux/amd64
 endif
 
 REGISTRY_PHP=$(REGISTRY)/$(PHP_IMAGE):$(D_TAG)
@@ -46,17 +52,13 @@ docker-build:
 
 docker-build-php:
 	cd docker/production/php && \
-	docker buildx build --platform=linux/amd64 -t $(REGISTRY_PHP) -f Dockerfile . && \
+	docker $(BUILD) -t $(REGISTRY_PHP) -f Dockerfile . && \
 	docker push $(REGISTRY_PHP)
-
-docker-build-php-dev:
-	cd docker/production/php && \
-	docker build -t $(DEV_IMAGE) -f Dockerfile .
 
 docker-build-app:
 	tar -cf docker/production/app/app.tar app/ && \
 	cd docker/production/app && \
-	docker buildx build --platform=linux/amd64 -t $(REGISTRY_APP) -f Dockerfile . && \
+	docker $(BUILD) -t $(REGISTRY_APP) -f Dockerfile . && \
 	docker push $(REGISTRY_APP) && \
 	rm app.tar
 
