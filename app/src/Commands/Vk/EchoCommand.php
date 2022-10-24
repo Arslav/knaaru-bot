@@ -2,20 +2,20 @@
 
 namespace Arslav\KnaaruBot\Commands\Vk;
 
-use Arslav\Bot\App;
-use Arslav\KnaaruBot\Commands\Vk\Base\LimitedVkCommand;
+use Arslav\Bot\Vk\App;
 use DigitalStar\vk_api\VkApiException;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
+use Arslav\KnaaruBot\Commands\Vk\Base\LimitedVkCommand;
 
 class EchoCommand extends LimitedVkCommand
 {
     /**
      * @inheritDoc
      *
-     * @throws VkApiException
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
+     * @throws VkApiException
      */
     public function run(): void
     {

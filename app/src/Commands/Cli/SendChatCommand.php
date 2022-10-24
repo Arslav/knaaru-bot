@@ -2,8 +2,8 @@
 
 namespace Arslav\KnaaruBot\Commands\Cli;
 
-use Arslav\Bot\App;
-use Arslav\Bot\Commands\Cli\Base\CliCommand;
+use Arslav\Bot\Vk\App;
+use Arslav\Bot\Cli\Command;
 use Arslav\KnaaruBot\Services\ChatInfoService;
 use DI\Annotation\Inject;
 use DigitalStar\vk_api\VkApiException;
@@ -13,7 +13,7 @@ use Psr\Container\NotFoundExceptionInterface;
 /**
  * Команда отправляющая сообщение в чат. Пример: 1 Привет мир!
  */
-class SendChatCommand extends CliCommand
+class SendChatCommand extends Command
 {
     /**
      * @Inject

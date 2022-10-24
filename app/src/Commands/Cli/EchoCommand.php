@@ -2,12 +2,12 @@
 
 namespace Arslav\KnaaruBot\Commands\Cli;
 
-use Arslav\Bot\Commands\Cli\Base\CliCommand;
+use Arslav\Bot\Cli\Command;
 
 /**
  * Команда выводящая первый из переданных аргументов
  */
-class EchoCommand extends CliCommand
+class EchoCommand extends Command
 {
     /**
      * @return void

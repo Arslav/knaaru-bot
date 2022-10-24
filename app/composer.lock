@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Arslav/Bot.git",
-                "reference": "a78c15b020bdc28eb8dcfc775723c385abce5bb9"
+                "reference": "4d46cc53fea6e8ce0f2f82826ef935df8d417c7b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Arslav/Bot/zipball/a78c15b020bdc28eb8dcfc775723c385abce5bb9",
-                "reference": "a78c15b020bdc28eb8dcfc775723c385abce5bb9",
+                "url": "https://api.github.com/repos/Arslav/Bot/zipball/4d46cc53fea6e8ce0f2f82826ef935df8d417c7b",
+                "reference": "4d46cc53fea6e8ce0f2f82826ef935df8d417c7b",
                 "shasum": ""
             },
             "require": {
@@ -29,7 +29,8 @@
                 "psr/log": "^2.0.0",
                 "symfony/console": "^5",
                 "symfony/maker-bundle": "^1.45",
-                "symfony/orm-pack": "^2.2"
+                "symfony/orm-pack": "^2.2",
+                "telegram-bot/api": "^2.3"
             },
             "require-dev": {
                 "codeception/codeception": "^5.0",
@@ -59,7 +60,7 @@
                 "issues": "https://github.com/Arslav/Bot/issues",
                 "source": "https://github.com/Arslav/Bot/tree/main"
             },
-            "time": "2022-08-22T21:00:07+00:00"
+            "time": "2022-10-24T20:26:05+00:00"
         },
         {
             "name": "behat/gherkin",
@@ -7085,6 +7086,66 @@
                 }
             ],
             "time": "2022-07-20T14:45:06+00:00"
+        },
+        {
+            "name": "telegram-bot/api",
+            "version": "v2.3.24",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/TelegramBot/Api.git",
+                "reference": "579f64d0ffe7f21d1f61cb8734e297686b286bf7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/TelegramBot/Api/zipball/579f64d0ffe7f21d1f61cb8734e297686b286bf7",
+                "reference": "579f64d0ffe7f21d1f61cb8734e297686b286bf7",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "php": ">=5.5.0"
+            },
+            "require-dev": {
+                "codeception/codeception": "*",
+                "phpunit/phpunit": "~4.0",
+                "squizlabs/php_codesniffer": "2.*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "TelegramBot\\Api\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ilya Gusev",
+                    "email": "mail@igusev.ru",
+                    "homepage": "https://php-cat.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "PHP Wrapper for Telegram Bot API",
+            "homepage": "https://github.com/TelegramBot/Api",
+            "keywords": [
+                "bot",
+                "bot api",
+                "php",
+                "telegram"
+            ],
+            "support": {
+                "issues": "https://github.com/TelegramBot/Api/issues",
+                "source": "https://github.com/TelegramBot/Api/tree/v2.3.24"
+            },
+            "time": "2021-12-06T13:05:34+00:00"
         },
         {
             "name": "theseer/tokenizer",

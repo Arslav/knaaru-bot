@@ -1,5 +1,7 @@
 <?php
 
+use TelegramBot\Api\BotApi;
+use TelegramBot\Api\Client;
 use DigitalStar\vk_api\vk_api;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
@@ -75,4 +77,7 @@ return [
             $c->get('VK_API_VERSION')
         )->setConfirm($c->get('VK_API_CONFIRM_STRING'))
     ),
+
+    BotApi::class => factory(fn ($c) => new BotApi('5421736297:AAF2NG0RAIvYnG3vFGKwsAjWTdPNvQr8IVI')),
+    Client::class => factory(fn ($c) => new Client('5421736297:AAF2NG0RAIvYnG3vFGKwsAjWTdPNvQr8IVI')),
 ];

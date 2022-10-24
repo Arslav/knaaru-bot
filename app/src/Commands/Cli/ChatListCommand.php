@@ -2,8 +2,7 @@
 
 namespace Arslav\KnaaruBot\Commands\Cli;
 
-use Arslav\Bot\Cli;
-use Arslav\Bot\Commands\Cli\Base\CliCommand;
+use Arslav\Bot\Cli\Command;
 use Arslav\KnaaruBot\Services\ChatInfoService;
 use Arslav\KnaaruBot\Services\CommandStatsService;
 use DI\Annotation\Inject;
@@ -14,7 +13,7 @@ use Psr\Container\NotFoundExceptionInterface;
 /**
  * Команда выводящая список всех чатов к которым подключен бот
  */
-class ChatListCommand extends CliCommand
+class ChatListCommand extends Command
 {
     /**
      * @Inject

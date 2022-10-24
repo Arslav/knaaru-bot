@@ -1,17 +1,19 @@
 <?php
 
-namespace Arslav\KnaaruBot\Commands\Vk;
+namespace Arslav\KnaaruBot\Commands\Telegram;
 
-use Arslav\Bot\Vk\App;
-use Arslav\KnaaruBot\Commands\Vk\Base\LimitedVkCommand;
+use CURLFile;
+use Arslav\Bot\Telegram\App;
+use TelegramBot\Api\Exception;
+use Arslav\Bot\Telegram\Command;
 use Arslav\KnaaruBot\Helpers\ArrayHelper;
 use Arslav\KnaaruBot\Services\FileService;
 use DI\Annotation\Inject;
-use DigitalStar\vk_api\VkApiException;
+use TelegramBot\Api\InvalidArgumentException;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
-class GiveMePillsCommand extends LimitedVkCommand
+class GiveMePillsCommand extends Command
 {
     /**
      * @Inject
@@ -22,19 +24,19 @@ class GiveMePillsCommand extends LimitedVkCommand
     /**
      * @inheritDoc
      *
-     * @throws VkApiException
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
+     * @throws Exception
+     * @throws InvalidArgumentException
      */
     public function run(): void
     {
         $pills = $this->fileService->getFiles('/public/images/pills');
 
         if (empty($pills)) {
-            App::getVk()->reply('Таблетки кончились');
+            App::getTelegram()->sendMessage($this->chatId, 'Таблетки кончились');
             return;
         }
-
-        App::getVk()->sendImage($this->peer_id, ArrayHelper::randomSelect($pills));
+        App::getTelegram()->sendPhoto($this->chatId, new \CURLFile(ArrayHelper::randomSelect($pills)));
     }
 }

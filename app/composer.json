@@ -25,7 +25,8 @@
         "php-di/php-di": "^6.0.0",
         "monolog/monolog": "^3.2",
         "nesbot/carbon": "^2.61",
-        "codeception/codeception": "5.0.0"
+        "codeception/codeception": "5.0.0",
+        "ext-curl": "*"
     },
     "require-dev": {
         "doctrine/data-fixtures": "^1.5",

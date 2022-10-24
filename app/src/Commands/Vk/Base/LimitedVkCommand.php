@@ -2,6 +2,7 @@
 
 namespace Arslav\KnaaruBot\Commands\Vk\Base;
 
+use Arslav\Bot\Vk\Command;
 use Arslav\Bot\Commands\Vk\Base\VkCommand;
 use Arslav\KnaaruBot\Services\CommandStatsService;
 use DI\Annotation\Inject;
@@ -12,7 +13,7 @@ use Doctrine\ORM\OptimisticLockException;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
-abstract class LimitedVkCommand extends VkCommand
+abstract class LimitedVkCommand extends Command
 {
     public int $limit = 10;
 

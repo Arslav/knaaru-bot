@@ -2,7 +2,7 @@
 
 namespace Arslav\KnaaruBot\Services;
 
-use Arslav\Bot\App;
+use Arslav\Bot\BaseApp;
 use Arslav\KnaaruBot\Entities\CommandLog;
 use Carbon\Carbon;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -28,7 +28,7 @@ class CommandStatsService
     public function __construct()
     {
         //TODO: Переписать на DI
-        $this->em = App::getEntityManager();
+        $this->em = BaseApp::getEntityManager();
         $this->repository = $this->em->getRepository(CommandLog::class);
     }
 
