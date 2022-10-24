@@ -18,7 +18,7 @@ class FileService
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
-    function getFiles(string $dir): array
+    public function getFiles(string $dir): array
     {
         $files = [];
         try {

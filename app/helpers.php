@@ -13,7 +13,7 @@ use Symfony\Component\Finder\Finder;
  */
 function checkChance(float $chance): bool
 {
-    return rand(0,100) < $chance * 100;
+    return rand(0, 100) < $chance * 100;
 }
 
 /**
