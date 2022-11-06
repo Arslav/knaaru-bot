@@ -32,11 +32,11 @@ class ChatListCommand extends Command
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
-    public function run(): void
+    public function execute(): void
     {
-        $chat_ids = $this->statsService->getAllChatIds();
+        $chatIds = $this->statsService->getAllChatIds();
 
-        $chats = $this->chatInfoService->getChatsInfoByIds($chat_ids);
+        $chats = $this->chatInfoService->getChatsInfoByIds($chatIds);
 
         if (empty($chats)) {
             echo "Активные чаты не найдены";
@@ -44,9 +44,9 @@ class ChatListCommand extends Command
         }
 
         foreach ($chats as $chat) {
-            $chat_id = $this->chatInfoService->toChatId($chat['peer']['id']);
+            $chatIds = $this->chatInfoService->toChatId($chat['peer']['id']);
             $members = $chat['chat_settings']['members_count'];
-            echo "id: $chat_id, название: \"{$chat['chat_settings']['title']}\", число участников: $members" . PHP_EOL;
+            echo "id: $chatIds, название: \"{$chat['chat_settings']['title']}\", число участников: $members" . PHP_EOL;
         }
     }
 }

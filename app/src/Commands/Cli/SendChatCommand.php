@@ -27,7 +27,7 @@ class SendChatCommand extends Command
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
-    public function run(): void
+    public function execute(): void
     {
         $peer_id = $this->chatInfoService->toPeerId($this->args[0]);
         array_shift($this->args);

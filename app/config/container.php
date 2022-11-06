@@ -1,5 +1,7 @@
 <?php
 
+use Arslav\Bot\Telegram\Bot;
+use Arslav\Bot\Vk\Bot as VkBot;
 use TelegramBot\Api\BotApi;
 use TelegramBot\Api\Client;
 use DigitalStar\vk_api\vk_api;
@@ -14,6 +16,7 @@ use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
+use Arslav\Bot\Telegram\Bot as TelegramBot;
 use function DI\env;
 use function DI\factory;
 
@@ -25,6 +28,8 @@ return [
     'VK_API_TOKEN' => env('VK_API_TOKEN'),
     'VK_API_VERSION' => env('VK_API_VERSION'),
     'VK_API_CONFIRM_STRING' => env('VK_API_CONFIRM_STRING'),
+    'TELEGRAM_TOKEN' => env('TELEGRAM_TOKEN'),
+
     'DB_HOST' => env('DB_HOST'),
     'DB_PORT' => env('DB_PORT'),
     'DB_USER' => env('DB_USER'),
@@ -71,13 +76,12 @@ return [
         EntityManager::create($c->get(Connection::class), $c->get(Configuration::class)
     )),
 
-    vk_api::class => factory(fn ($c) =>
-        vk_api::create(
+    VkBot::class => factory(fn ($c) =>
+        new VkBot(
             $c->get('VK_API_TOKEN'),
-            $c->get('VK_API_VERSION')
-        )->setConfirm($c->get('VK_API_CONFIRM_STRING'))
+            $c->get('VK_API_CONFIRM_STRING'),
+            $c->get('VK_API_VERSION'),
+        )
     ),
-
-    BotApi::class => factory(fn ($c) => new BotApi('5421736297:AAF2NG0RAIvYnG3vFGKwsAjWTdPNvQr8IVI')),
-    Client::class => factory(fn ($c) => new Client('5421736297:AAF2NG0RAIvYnG3vFGKwsAjWTdPNvQr8IVI')),
+    TelegramBot::class => factory(fn ($c) => new Bot($c->get('TELEGRAM_TOKEN'))),
 ];

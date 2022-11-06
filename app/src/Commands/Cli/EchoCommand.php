@@ -12,7 +12,7 @@ class EchoCommand extends Command
     /**
      * @return void
      */
-    public function run(): void
+    public function execute(): void
     {
         echo $this->args[0].PHP_EOL;
     }

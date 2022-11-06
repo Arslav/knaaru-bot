@@ -2,16 +2,13 @@
 
 namespace Arslav\KnaaruBot\Commands\Vk\Base;
 
-use Arslav\Bot\Vk\Command;
-use Arslav\Bot\Commands\Vk\Base\VkCommand;
+use Arslav\Bot\Command;
 use Arslav\KnaaruBot\Services\CommandStatsService;
 use DI\Annotation\Inject;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\OptimisticLockException;
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\NotFoundExceptionInterface;
 
 abstract class LimitedVkCommand extends Command
 {
@@ -28,24 +25,20 @@ abstract class LimitedVkCommand extends Command
     /**
      * @return bool
      *
-     * @throws ContainerExceptionInterface
      * @throws NoResultException
      * @throws NonUniqueResultException
-     * @throws NotFoundExceptionInterface
      * @throws ORMException
      * @throws OptimisticLockException
      */
     public function beforeAction(): bool
     {
-        $this->statsService->saveUsage(static::class, $this->from_id, $this->chat_id);
+        $this->statsService->saveUsage(static::class, $this->message->getUserId(), $this->message->getChatId());
         return $this->checkLimit();
     }
 
     /**
      * @return bool
      *
-     * @throws NotFoundExceptionInterface
-     * @throws ContainerExceptionInterface
      * @throws NonUniqueResultException
      * @throws NoResultException
      */
@@ -54,8 +47,8 @@ abstract class LimitedVkCommand extends Command
         $usages = $this->statsService->usagesByInterval(
             $this->interval,
             static::class,
-            $this->from_id,
-            $this->chat_id
+            $this->message->getUserId(),
+            $this->message->getChatId()
         );
         return $usages < $this->limit;
     }

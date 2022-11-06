@@ -7,7 +7,7 @@ use function DI\create;
 use function DI\get;
 
 return [
-    EchoCommand::class => create()
+    EchoCommand::class => autowire()
         ->constructor([
             '^ыы+$',
             '^кря+$',

@@ -2,17 +2,16 @@
 
 namespace Arslav\KnaaruBot\Commands\Telegram;
 
+use Arslav\Bot\Command;
 use Arslav\Bot\Telegram\App;
-use Arslav\Bot\Telegram\Command;
 
 class HelloCommand extends Command
 {
-
     /**
      * @inheritDoc
      */
-    public function run(): void
+    public function execute(): void
     {
-        App::getTelegram()->sendMessage($this->chatId, 'veritas aequitas' . $this->args[0]);
+        App::bot()->reply('veritas aequitas' . $this->args[0]);
     }
 }

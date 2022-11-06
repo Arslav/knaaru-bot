@@ -26,15 +26,15 @@ class GiveMePillsCommand extends LimitedVkCommand
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
-    public function run(): void
+    public function execute(): void
     {
         $pills = $this->fileService->getFiles('/public/images/pills');
 
         if (empty($pills)) {
-            App::getVk()->reply('Таблетки кончились');
+            App::bot()->reply('Таблетки кончились');
             return;
         }
 
-        App::getVk()->sendImage($this->peer_id, ArrayHelper::randomSelect($pills));
+        App::bot()->sendPhoto($this->message->getChatId(), ArrayHelper::randomSelect($pills));
     }
 }

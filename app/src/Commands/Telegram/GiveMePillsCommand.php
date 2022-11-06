@@ -2,16 +2,15 @@
 
 namespace Arslav\KnaaruBot\Commands\Telegram;
 
-use CURLFile;
+use Arslav\Bot\Command;
 use Arslav\Bot\Telegram\App;
 use TelegramBot\Api\Exception;
-use Arslav\Bot\Telegram\Command;
 use Arslav\KnaaruBot\Helpers\ArrayHelper;
 use Arslav\KnaaruBot\Services\FileService;
 use DI\Annotation\Inject;
+use Psr\Container\NotFoundExceptionInterface;
 use TelegramBot\Api\InvalidArgumentException;
 use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\NotFoundExceptionInterface;
 
 class GiveMePillsCommand extends Command
 {
@@ -29,14 +28,15 @@ class GiveMePillsCommand extends Command
      * @throws Exception
      * @throws InvalidArgumentException
      */
-    public function run(): void
+    public function execute(): void
     {
         $pills = $this->fileService->getFiles('/public/images/pills');
 
         if (empty($pills)) {
-            App::getTelegram()->sendMessage($this->chatId, 'Таблетки кончились');
+            App::bot()->reply('Таблетки кончились');
             return;
         }
-        App::getTelegram()->sendPhoto($this->chatId, new \CURLFile(ArrayHelper::randomSelect($pills)));
+
+        App::bot()->sendPhoto($this->message->getChatId(), ArrayHelper::randomSelect($pills));
     }
 }

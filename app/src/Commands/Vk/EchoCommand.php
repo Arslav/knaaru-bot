@@ -8,6 +8,11 @@ use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use Arslav\KnaaruBot\Commands\Vk\Base\LimitedVkCommand;
 
+/**
+ * Class EchoCommand
+ *
+ * @package Arslav\KnaaruBot\Commands\Vk
+ */
 class EchoCommand extends LimitedVkCommand
 {
     /**
@@ -17,8 +22,8 @@ class EchoCommand extends LimitedVkCommand
      * @throws NotFoundExceptionInterface
      * @throws VkApiException
      */
-    public function run(): void
+    public function execute(): void
     {
-        App::getVk()->reply($this->message);
+        App::bot()->reply($this->message->getContent());
     }
 }

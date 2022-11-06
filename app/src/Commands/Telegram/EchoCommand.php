@@ -2,13 +2,18 @@
 
 namespace Arslav\KnaaruBot\Commands\Telegram;
 
+use Arslav\Bot\Command;
 use Arslav\Bot\Telegram\App;
 use TelegramBot\Api\Exception;
-use Arslav\Bot\Telegram\Command;
 use TelegramBot\Api\InvalidArgumentException;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
+/**
+ * Class EchoCommand
+ *
+ * @package Arslav\KnaaruBot\Commands\Telegram
+ */
 class EchoCommand extends Command
 {
     /**
@@ -19,8 +24,8 @@ class EchoCommand extends Command
      * @throws Exception
      * @throws InvalidArgumentException
      */
-    public function run(): void
+    public function execute(): void
     {
-        App::getTelegram()->sendMessage($this->chatId, $this->message);
+        App::bot()->reply($this->message->getContent());
     }
 }
